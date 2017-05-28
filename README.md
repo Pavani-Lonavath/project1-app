@@ -16,5 +16,8 @@ After you have created a web application project on eclipse :
 6. It will open the link of your application deployed. its not fully working yet....copy that URL of your GAE deployed. 
 7. Paste the link in your facebook App-> Settings and Website URL as shown in screenshot here . http://imgur.com/XYCTbrf (Note: if you dont see the Website URL option in your facebook APP settings, go on same page. Click "Add Platform -> Website" and set the website then ) .
 
+## APP Running Demo
+
+There is a running app here http://1-dot-project1-test-168922.appspot.com/
 cheers :)
 Imran malik
