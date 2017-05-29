@@ -18,10 +18,14 @@
     <title>CS 6320 Project 1 </title>
  
  <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
-    <link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
-     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
- 
-    <link href="http://getbootstrap.com/examples/jumbotron-narrow/jumbotron-narrow.css" rel="stylesheet">
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
  
 <meta charset="UTF-8">
 </head>
@@ -232,7 +236,7 @@ the FB.login() function when clicked.
 
 <div>
 <ul class="nav navbar-nav">
-	<li class="active"> <a href="#"> Home </a></li>
+	<li class="active"> <a href="index.jsp"> Home </a></li>
 	<li><a href="friends_tweet.jsp">Friends Tweets</a></li>
 	<li><a href="top_tweets.jsp">Top Tweets </a></li>
 </ul>
@@ -307,7 +311,7 @@ if (cookies != null) {
     query.addFilter("user_id",
             Query.FilterOperator.EQUAL,
             user_id);
-    List<Entity> tweets = datastore.prepare(query).asList(FetchOptions.Builder.withLimit(5));
+    List<Entity> tweets = datastore.prepare(query).asList(FetchOptions.Builder.withChunkSize(2000));
     int num_tweets = tweets.size();
     if (tweets.isEmpty()) {
 %>
