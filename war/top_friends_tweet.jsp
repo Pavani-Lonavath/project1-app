@@ -15,13 +15,12 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-    <title> Harman Gill CS 6320 Project1 </title>
+    <title>Harman Gill CS 6320 Project1 </title>
  
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
- <!-- Latest compiled and minified CSS -->
+<!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
 <!-- Optional theme -->
@@ -29,7 +28,7 @@
 
 <!-- Latest compiled and minified JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
- 
+
  <style>
  .well{
 background-color: rgb(2, 15, 13);
@@ -52,6 +51,7 @@ background-color: rgb(2, 15, 13);
 	<li><a href="top_tweets_page.jsp">Most Visited tweets </a></li>
 	<li><a href="friends_page.jsp">Tweets by Friends </a></li>
 	<li><a href="top_friends_tweet.jsp">Most Visited Friends tweets </a></li>
+
 </ul>
 </div>
 
@@ -61,46 +61,66 @@ background-color: rgb(2, 15, 13);
 <div class="container">
 <div class = "panel panel-info">
    <div class = "panel-heading">
-      <h3 class = "panel-title">View a single tweet  </h3>
+      <h3 class = "panel-title">Top Tweets </h3>
    </div>
-
+   
    <div class = "panel-body">
 <div class="span4" style="overflow-y: scroll; height:400px;">
 
 
 
-  <%
-    String t_key = request.getParameter("t_key");
-    if (t_key == null) {
-    	out.print("no tweet key given");
-    	%>
-    	<script type="text/javascript"> msg= "reverting back , no tweet key parameter given";alert(msg); location.href="index.jsp";</script>
-    <%
-    } else { 
-        DatastoreService ds = DatastoreServiceFactory.getDatastoreService();
-        Key tw_key = KeyFactory.stringToKey(t_key); 
-        String tweet_text="", user_name="", date="";
- 
-        String count = "";
-			Entity tweet = ds.get(tw_key);
-			 tweet_text = (String) tweet.getProperty("tweet");
-			 Long newcount = (Long) tweet.getProperty("count");
-			 newcount +=1 ;
-			 tweet.setProperty("count", newcount);
-			 user_name = (String) tweet.getProperty("fb_username");
-			 date = (String) tweet.getProperty("date");
-			 ds.put(tweet);
-			
-			
+<%
+ Cookie[] cookies = request.getCookies();
+String fb_userid="";
+if (cookies != null) {
+	for (int i = 0; i < cookies.length; i++) {
+		Cookie cookie = cookies[i];
+		if (cookie.getName().equals("fb_userid")) {
+			fb_userid = cookie.getValue();
+		}
 
-    %>	
 
-<div><span class = "label label-success">Tweet:</span> <a href="">  <%=tweet_text %> </a>  </div><br>
-<div><span class = "label label-primary">Posted on:</span> <%=date %> </div><br>
-<div><span class = "label label-default">Posted by:</span> <%=user_name %> </div><br>
-<div><span class = "label label-info">View Count:</span> <%=newcount %> </div><br>
+	}
+}
+    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+    // Run an ancestor query to ensure we see the most up-to-date
+    // view of the Greetings belonging to the selected Guestbook.
+    Query query = new Query("Tweet");
+    query.addFilter("fb_userid",
+            Query.FilterOperator.NOT_EQUAL,
+            fb_userid);
+    query.addSort("fb_userid");
+    query.addSort("count", Query.SortDirection.DESCENDING);
+    List<Entity> tweets = datastore.prepare(query).asList(FetchOptions.Builder.withChunkSize(2000));
+    int num_tweets = tweets.size();
+    if (tweets.isEmpty()) {
+%>
+<div class="alert alert-danger"> <p> No  tweets found in datastore</p>
+</div>
+<%
+}
+else { 
+
+	for (Entity tweet : tweets) { 
+		String tweet_text =  (String) tweet.getProperty("tweet");
+		String tweet_date = (String) tweet.getProperty("date");
+		String user_name = (String) tweet.getProperty("fb_username");
+		String key = KeyFactory.keyToString(tweet.getKey());
+		String href = "'view.jsp?t_key=" + key + "'";
+		Long count = (Long) tweet.getProperty("count");
+		String pic = (String) tweet.getProperty("pic_link");
+		
+%>
+
+
+<div><span class = "label label-default">Tweet:</span> <a href=<%=href %>> <%=tweet_text %> </a>  </div><br>
+<div><span class = "label label-success">Posted By:</span> <%=user_name %> </div><br>
+<div><span class = "label label-primary">Posted on:</span>  <%=tweet_date %> </div><br>
+<div><span class = "label label-warning">View Count:</span> <%=count %> </div><br>
 <hr />
-<% } %>
+
+<% }} %>
+
 </div>
 
 

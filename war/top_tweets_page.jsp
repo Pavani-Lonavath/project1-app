@@ -48,8 +48,9 @@ background-color: rgb(2, 15, 13);
 <div>
 <ul class="nav navbar-nav">
 	<li class="active"> <a href="index.jsp"> Home </a></li>
-	<li><a href="friends_page.jsp">Tweets by Friends </a></li>
 	<li><a href="top_tweets_page.jsp">Most Visited tweets </a></li>
+	<li><a href="friends_page.jsp">Tweets by Friends </a></li>
+	<li><a href="top_friends_tweet.jsp">Most Visited Friends tweets </a></li>
 </ul>
 </div>
 
