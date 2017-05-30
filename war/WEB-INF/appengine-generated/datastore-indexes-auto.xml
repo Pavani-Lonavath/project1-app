@@ -1,16 +1,10 @@
-<!-- Indices written at Sat, 27 May 2017 15:23:05 PDT -->
+<!-- Indices written at Mon, 29 May 2017 17:40:30 PDT -->
 
 <datastore-indexes>
 
-    <!-- Used 2 times in query history -->
-    <datastore-index kind="Tweet" ancestor="false" source="auto">
-        <property name="user_id" direction="asc"/>
-        <property name="date" direction="desc"/>
-    </datastore-index>
-
     <!-- Used 1 time in query history -->
     <datastore-index kind="Tweet" ancestor="false" source="auto">
-        <property name="user_id" direction="asc"/>
+        <property name="fb_userid" direction="asc"/>
         <property name="count" direction="desc"/>
     </datastore-index>
 
