@@ -10,7 +10,7 @@ After you have created a web application project on eclipse :
 
 1. copy all files in `src` to src folder of your project. 
 2. Copy all files in `war` folder to war folder of your project.
-3. Update the facebook APP ID to the app ID of your app created at developers.facebook.com . You need to change this line with app ID of your facebook APP https://github.com/cs6320-project1/project1-app/blob/master/war/index.jsp#L78 
+3. Update the facebook APP ID to the app ID of your app created at developers.facebook.com . You need to change this line with app ID of your facebook APP https://github.com/cs6320-project1/project1-app/blob/master/war/index.jsp#L82 
 4. Similarly, update the App ENgine project ID to the project ID of your App ENgine project https://github.com/cs6320-project1/project1-app/blob/master/war/WEB-INF/appengine-web.xml#L3 
 5. Next you deploy to GAE from eclipse. 
 6. It will open the link of your application deployed. its not fully working yet....copy that URL of your GAE deployed. 
